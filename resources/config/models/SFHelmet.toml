@@ -1,0 +1,15 @@
+[Entity]
+nickname = "SF_Helmet"
+type = "model"
+
+[Resource]
+model_path = "/resources/models/SFHelmet/SciFiHelmet.gltf"
+type = "non_static"
+
+[Rigid_Body]
+mass = 150.0
+collision_hull = "collision_path"
+
+[Loadout]
+Externals = [1, 1, 1, 1, 2, 3]
+Internals = [4, 5]

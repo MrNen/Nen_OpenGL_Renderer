@@ -1,0 +1,6 @@
+[Entity]
+nickname = "Box"
+type = "model"
+[Resource]
+model_path = "/resources/models/Box/Box.gltf"
+type = "non_static"

@@ -1,0 +1,9 @@
+[Mouse]
+Sensitivity = 1.0
+[Keybinds]
+#For key values, reference GLFW key documentation.  https://www.glfw.org/docs/3.3/group__keys.html
+Forward = 87
+Backwards = 83
+Left = 65
+Right = 68
+Menu = 70

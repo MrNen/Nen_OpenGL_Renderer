@@ -1,0 +1,16 @@
+[Screen]
+Width = 2560
+Height = 1440
+Mode = "Window"
+Screen = 1
+Vsync = 1
+[Camera]
+Field_of_view = 60
+Position = [0.0, 0.0, 3.0]
+Look_At = [0.0, 0.0, -1.0]
+Up = [0.0, 1.0, 0.0]
+Near = 0.1
+Far = 100.0
+[Shader]
+Vertex_Path = "/resources/shaders/pbr.vert"
+Fragment_Path = "/resources/shaders/pbr.frag"

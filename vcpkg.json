@@ -1,0 +1,29 @@
+{
+  "name" : "openglrenderer",
+  "version-string" : "1.0.0",
+  "builtin-baseline" : "3265c187c74914aa5569b75355badebfdbab7987",
+  "dependencies" : [ {
+    "name" : "tomlplusplus",
+    "version>=" : "3.3.0"
+  }, {
+    "name" : "glfw3",
+    "version>=" : "3.3.8#2",
+    "$comment" : "    # this is heuristically generated, and may not be correct\n\n    find_package(glfw3 CONFIG REQUIRED)\n\n    target_link_libraries(main PRIVATE glfw)\n"
+  }, {
+    "name" : "glm",
+    "version>=" : "0.9.9.8#2",
+    "$comment" : "    # this is heuristically generated, and may not be correct\n\n    find_package(glm CONFIG REQUIRED)\n\n    target_link_libraries(main PRIVATE glm::glm)\n"
+  }, {
+    "name" : "glad",
+    "version>=" : "0.1.36",
+    "$comment" : "    # this is heuristically generated, and may not be correct\n\n    find_package(glad CONFIG REQUIRED)\n\n    target_link_libraries(main PRIVATE glad::glad)\n"
+  }, {
+    "name" : "nlohmann-json",
+    "version>=" : "3.11.2",
+    "$comment" : "    find_package(nlohmann_json CONFIG REQUIRED)\n\n    target_link_libraries(main PRIVATE nlohmann_json::nlohmann_json)\n"
+  },
+    {
+      "name": "stb",
+      "version>=": "2023-04-11#1"
+    } ]
+}
