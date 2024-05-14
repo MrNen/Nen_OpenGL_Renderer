@@ -31,8 +31,8 @@ RenderState::RenderState() {
   camera.InitCamera(shaderProgram.id);
   ambientLight = 1.0f;
 
-  glm::vec3 lightPos = {0.0f, 5.0f, 5.0f};
-  glm::vec3 lightDiffuse = {15.0f, 15.0f, 15.0f};
+  glm::vec3 lightPos = {0.0f, 1.0f, 4.0f};
+  glm::vec3 lightDiffuse = {.60f, .80f, .80f};
   glProgramUniform3fv(shaderProgram.id, Uniform::lightPos, 1, glm::value_ptr(lightPos));
   glProgramUniform3fv(shaderProgram.id, Uniform::lightColor, 1, glm::value_ptr(lightDiffuse));
 
