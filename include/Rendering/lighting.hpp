@@ -18,7 +18,6 @@ class SceneLighting {
   PointLight gpuLight;
   glm::vec3 ambient;
 
-
  public:
   void SetDebugLight(glm::vec3 newPosition, glm::vec3 newColor);
   void BindPointLight(u32 shaderId, u32 index);

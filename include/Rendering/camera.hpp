@@ -18,7 +18,6 @@ class Camera : public Configurable {
 
   glm::mat3 orientation;
 
-
   glm::mat4x4 viewMatrix;
   glm::mat4x4 projectionMatrix;
 

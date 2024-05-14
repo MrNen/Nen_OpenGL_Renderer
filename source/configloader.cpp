@@ -5,13 +5,8 @@
 #include "windows.h"
 
 toml::parse_result ConfigLoader::LoadSettings() {
-  CHAR path[MAX_PATH];
-  GetModuleFileName(nullptr, path, MAX_PATH);
-  std::string execPath = path;
-  execPath.erase(execPath.size() - execNameSize, execPath.size());
   std::string fileLoc = "resources/config/settings.toml";
-  const auto file = std::format("{}{}", execPath, fileLoc);
-  return toml::parse_file("C:/Projects/OpenGLRenderer/resources/config/settings.toml");
+  return toml::parse_file(fileLoc);
 }
 
 ConfigLoader *ConfigLoader::CreateConfigLoader() {

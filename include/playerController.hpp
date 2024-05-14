@@ -37,7 +37,6 @@ class PlayerController final : public Configurable {
   float GetYaw();
   glm::vec2 GetWishDirection();
 
-
   void ResetPitchYaw();
   void EnableMouseCursor();
   void DisableMouseCursor();

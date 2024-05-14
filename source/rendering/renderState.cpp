@@ -31,14 +31,14 @@ RenderState::RenderState() {
   camera.InitCamera(shaderProgram.id);
   ambientLight = 1.0f;
 
-  glm::vec3 lightPos = {0.0f, 5.0f, 15.0f};
-  glm::vec3 lightDiffuse = {5.0f, 5.0f, 5.0f};
+  glm::vec3 lightPos = {0.0f, 5.0f, 5.0f};
+  glm::vec3 lightDiffuse = {15.0f, 15.0f, 15.0f};
   glProgramUniform3fv(shaderProgram.id, Uniform::lightPos, 1, glm::value_ptr(lightPos));
   glProgramUniform3fv(shaderProgram.id, Uniform::lightColor, 1, glm::value_ptr(lightDiffuse));
 
   lighting.SetDebugLight(lightPos, lightDiffuse);
   lighting.BindPointLight(shaderProgram.id, 0);
-  lighting.SetAmbientLight({0.6f, 0.6f, 0.6f}, shaderProgram.id);
+  lighting.SetAmbientLight({55.6f, 55.6f, 55.6f}, shaderProgram.id);
 }
 void RenderState::SetAmbientLight(float value) {
 

@@ -52,7 +52,7 @@ void AssignVectorValues(std::vector<glm::vec4> &vector,
 						const fx::gltf::Buffer &buffer);
 
 Mesh ParseMesh(const fx::gltf::Mesh &mesh, const fx::gltf::Document &doc);
-std::shared_ptr<Model> GenerateModelReference(const std::string &filePath);
+std::shared_ptr<Model> GenerateGLTFModelRef(const std::string &filePath);
 Texture GenerateTexReference(const std::string &filepath);
 ResourceLoader *ResourceLoader::instance;
 
@@ -70,7 +70,7 @@ ResourceLoader *ResourceLoader::GetHandle() {
 bool ResourceLoader::GenerateResource(const toml::parse_result &toml) {
   u64 id = std::hash<std::string>{}(toml["Entity"]["nickname"].value_or(""));
   const std::string filePath = std::format("{}{}", debugRoot, toml["Resource"]["model_path"].value_or(""));
-  modelReferences.insert({id, GenerateModelReference(filePath)});
+  modelReferences.insert({id, GenerateGLTFModelRef(filePath)});
   modelReferences[id]->archetypeId = id;
 
   return true;
@@ -84,7 +84,7 @@ std::weak_ptr<Resources::Model> ResourceLoader::GrabModelRef(u64 id) {
   return modelReferences[id];
 }
 
-std::shared_ptr<Model> GenerateModelReference(const std::string &filePath) {
+std::shared_ptr<Model> GenerateGLTFModelRef(const std::string &filePath) {
   const fx::gltf::Document &doc = fx::gltf::LoadFromText(filePath);
 
   const auto modelDirectory = fx::gltf::detail::GetDocumentRootPath(filePath);

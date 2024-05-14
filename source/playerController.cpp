@@ -12,12 +12,12 @@ bool PlayerController::LoadToml(const toml::parse_result &toml) {
   glfwSetCursorPosCallback(ptr, MouseCallback);
   glfwSetKeyCallback(ptr, KeyPressCallback);
 
-  forwardKey = toml["Keybinds"]["Forward"].value_or(87);
-  backwardsKey = toml["Keybinds"]["Backwards"].value_or(83);
-  leftKey = toml["Keybinds"]["Left"].value_or(65);
-  rightKey = toml["Keybinds"]["Right"].value_or(68);
-  menuKey = toml["Keybinds"]["Menu"].value_or(70);
-  sensitivity = toml["Mouse"]["Sensitivity"].value_or(.1);
+  forwardKey = toml["Keybinds"]["Forward"].value_or(GLFW_KEY_W);
+  backwardsKey = toml["Keybinds"]["Backwards"].value_or(GLFW_KEY_S);
+  leftKey = toml["Keybinds"]["Left"].value_or(GLFW_KEY_A);
+  rightKey = toml["Keybinds"]["Right"].value_or(GLFW_KEY_D);
+  menuKey = toml["Keybinds"]["Menu"].value_or(GLFW_KEY_ESCAPE);
+  sensitivity = toml["Mouse"]["Sensitivity"].value_or(.1f);
 
   lastMousePos.x = ConfigLoader::GetHandle()->LoadSettings()["Screen"]["Width"].value_or(1920) / 2;
   lastMousePos.y = ConfigLoader::GetHandle()->LoadSettings()["Screen"]["Height"].value_or(1080) / 2;
@@ -26,7 +26,7 @@ bool PlayerController::LoadToml(const toml::parse_result &toml) {
 }
 
 void PlayerController::SaveToml() {
-  std::fstream file("C:/Projects/OpenGLRenderer/resources/config/keybinds.toml");
+  std::fstream file("resources/config/keybinds.toml");
 
   auto tbl = toml::table{
 	  {"Keybinds", toml::table{
@@ -38,6 +38,9 @@ void PlayerController::SaveToml() {
 	  }},
 	  {"Mouse", toml::table{{"Sensitivity", sensitivity}}}};
 
+  file << tbl;
+
+  file.close();
 }
 
 void PlayerController::MouseCallback(GLFWwindow *window, double x, double y) {
