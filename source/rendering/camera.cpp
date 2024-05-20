@@ -1,7 +1,6 @@
 #include "PCH.hpp"
 #include "Rendering/camera.hpp"
 #include "glm/gtx/matrix_decompose.hpp"
-#include <glm/gtx/euler_angles.hpp>
 
 bool Camera::LoadToml(const toml::parse_result &toml) {
   pos = {toml["Camera"]["Position"][0].value_or(0.0), toml["Camera"]["Position"][1].value_or(5.0),

@@ -1,0 +1,10 @@
+[Images]
+front = "/resources/textures/skybox/front.jpg"
+left = "/resources/textures/skybox/left.jpg"
+right = "/resources/textures/skybox/right.jpg"
+back = "/resources/textures/skybox/back.jpg"
+bottom = "/resources/textures/skybox/bottom.jpg"
+top = "/resources/textures/skybox/top.jpg"
+[Shader]
+Vertex_Path = "/resources/shaders/skybox.vert"
+Fragment_Path = "/resources/shaders/skybox.frag"

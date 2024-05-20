@@ -18,12 +18,11 @@ class Camera : public Configurable {
 
   glm::mat3 orientation;
 
-  glm::mat4x4 viewMatrix;
-  glm::mat4x4 projectionMatrix;
-
   bool LoadToml(const toml::parse_result &toml) override;
   void SaveToml() override;
  public:
+  glm::mat4x4 viewMatrix;
+  glm::mat4x4 projectionMatrix;
 
   Camera() = default;
   ~Camera() override = default;

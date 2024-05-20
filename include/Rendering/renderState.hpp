@@ -6,10 +6,13 @@
 #include "shader.hpp"
 #include "resourceloader.hpp"
 #include "lighting.hpp"
+#include "Rendering/skybox.hpp"
 
 class RenderState {
 
   ShaderProgram shaderProgram;
+  Skybox skybox;
+
   SceneLighting lighting;
   std::vector<OpenGLModel> models;
   float ambientLight;

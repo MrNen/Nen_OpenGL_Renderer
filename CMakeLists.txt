@@ -4,7 +4,7 @@ set(PROJECT_NAME "OpenGLRenderer")
 project("${PROJECT_NAME}" VERSION 1.0 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 20)
-set(SOURCE_PATH "${PROJECT_SOURCE_DIR}/source" )
+set(SOURCE_PATH "${PROJECT_SOURCE_DIR}/source")
 set(INCLUDE_PATH "${PROJECT_SOURCE_DIR}/include")
 set(EXTERNAL_PATH "${PROJECT_SOURCE_DIR}/extern")
 
@@ -17,7 +17,7 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE
         "_SILENCE_CXX17_CODECVT_HEADER_DEPRECATION_WARNING;"
         "_CRT_SECURE_NO_WARNINGS;"
         "NOMINMAX;"
-        )
+)
 
 target_include_directories(${PROJECT_NAME} PRIVATE ${INCLUDE_PATH})
 target_include_directories(${PROJECT_NAME} PRIVATE ${EXTERNAL_PATH})

@@ -85,6 +85,7 @@ void ShaderProgram::SaveToml() {
 }
 
 void ShaderProgram::UseProgram() const {
+  glUseProgram(0);
   if (id == 0) {
 	throw;
   }

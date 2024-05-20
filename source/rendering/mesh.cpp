@@ -60,7 +60,6 @@ OpenGLMesh::OpenGLMesh(const Resources::Mesh &meshRef) {
 void OpenGLMesh::DrawMesh() {
   GlCall(glBindVertexArray(vertexAttributeArray));
   GlCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBufferObject))
-
   GlCall(glDrawElements(GL_TRIANGLES, size, GL_UNSIGNED_INT, nullptr));
   glBindVertexArray(0);
 }

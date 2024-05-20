@@ -8,8 +8,10 @@ void RenderState::Update(const GameState &state1, const GameState &state2, u64 c
 }
 
 void RenderState::Render() {
-  glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
+  //glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
+
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
   shaderProgram.UseProgram();
   camera.UpdateCameraTransform(shaderProgram.id);
   for (auto &m : models) {
@@ -17,10 +19,18 @@ void RenderState::Render() {
 	m.Draw(shaderProgram.id);
 	m.UnBindTextures();
   }
+
+  skybox.UpdateCameraData(camera.viewMatrix, camera.projectionMatrix);
+  skybox.RenderSkybox();
 }
 
 void RenderState::AddModel(u64 id) {
   models.emplace_back(ConfigLoader::CreateConfigurable<OpenGLModel>(id));
+  models.emplace_back(ConfigLoader::CreateConfigurable<OpenGLModel>(id));
+
+  glm::mat4 transform = glm::translate(glm::mat4(1), {4.0, 0.0, 0.0});
+  models[1].TransformModel(transform);
+
 }
 
 RenderState::RenderState() {
@@ -28,6 +38,9 @@ RenderState::RenderState() {
   models.reserve(20);
   camera = ConfigLoader::CreateConfigurable<Camera>(configLoader->LoadSettings());
   shaderProgram = ConfigLoader::CreateConfigurable<ShaderProgram>(configLoader->LoadSettings());
+  skybox =
+	  ConfigLoader::CreateConfigurable<Skybox>(ConfigLoader::GetHandle()->LoadConfigFile("resources/config/skybox.toml"));
+
   camera.InitCamera(shaderProgram.id);
   ambientLight = 1.0f;
 
