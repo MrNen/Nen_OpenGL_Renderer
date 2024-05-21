@@ -119,6 +119,9 @@ void Skybox::RenderSkybox() {
   glDepthFunc(GL_LESS);
 }
 void Skybox::UpdateCameraData(glm::mat4 view, glm::mat4 projection) {
+
+  //We remove the translation part of the camera to make sure the cubemap is always centered about the camera.
+  glm::mat4 noTransformView = glm::mat4(glm::mat3(view));
   glProgramUniformMatrix4fv(shader.id, Uniform::cameraProjection, 1, GL_FALSE, glm::value_ptr(projection));
-  glProgramUniformMatrix4fv(shader.id, Uniform::cameraView, 1, GL_FALSE, glm::value_ptr(view));
+  glProgramUniformMatrix4fv(shader.id, Uniform::cameraView, 1, GL_FALSE, glm::value_ptr(noTransformView));
 }
