@@ -19,7 +19,6 @@ void RenderState::Render() {
 	m.Draw(shaderProgram.id);
 	m.UnBindTextures();
   }
-
   skybox.UpdateCameraData(camera.viewMatrix, camera.projectionMatrix);
   skybox.RenderSkybox();
 }
@@ -40,19 +39,22 @@ RenderState::RenderState() {
   shaderProgram = ConfigLoader::CreateConfigurable<ShaderProgram>(configLoader->LoadSettings());
   skybox =
 	  ConfigLoader::CreateConfigurable<Skybox>(ConfigLoader::GetHandle()->LoadConfigFile("resources/config/skybox.toml"));
-
   camera.InitCamera(shaderProgram.id);
-  ambientLight = 1.0f;
+  lighting.InitLighting(shaderProgram.id);
+  lighting.BindPointLights(shaderProgram.id);
 
-  glm::vec3 lightPos = {0.0f, 1.0f, 4.0f};
-  glm::vec3 lightDiffuse = {.60f, .80f, .80f};
-  glProgramUniform3fv(shaderProgram.id, Uniform::lightPos, 1, glm::value_ptr(lightPos));
-  glProgramUniform3fv(shaderProgram.id, Uniform::lightColor, 1, glm::value_ptr(lightDiffuse));
+  glm::vec3 lightPos = {10.0f, 4.0f, 4.0f};
+  glm::vec3 lightDiffuse = {.00f, .00f, .80f};
 
-  lighting.SetDebugLight(lightPos, lightDiffuse);
-  lighting.BindPointLight(shaderProgram.id, 0);
-  lighting.SetAmbientLight({55.6f, 55.6f, 55.6f}, shaderProgram.id);
+  glm::vec3 lightPos2 = {-10.0f, 4.0f, 4.0f};
+  glm::vec3 lightDiffuse2 = {.90f, .00f, .00f};
+
+  lighting.AddLight(lightDiffuse, lightPos);
+  lighting.AddLight(lightDiffuse2, lightPos2);
+  lighting.BindPointLights(shaderProgram.id);
+
 }
+
 void RenderState::SetAmbientLight(float value) {
 
 }

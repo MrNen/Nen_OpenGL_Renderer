@@ -79,8 +79,6 @@ bool Skybox::LoadToml(const toml::parse_result &toml) {
 	  1.0f, -1.0f, 1.0f
   };
 
-  u32 test = vertexData.size();
-
   glGenVertexArrays(1, &vertexArrayId);
   glGenBuffers(1, &vertices);
   glBindVertexArray(vertexArrayId);

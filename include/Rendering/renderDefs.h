@@ -18,13 +18,17 @@ enum Uniform {
   modelTransform,
   cameraView,
   cameraProjection,
-  albedoSampler,
+  numberOfLights,
   roughnessSampler,
   normalSampler,
   ambientLight,
   cameraPosition,
   lightPos,
   lightColor
+};
+
+enum UniformBlockBindings {
+  lights
 };
 
 enum VertexAttributeType {

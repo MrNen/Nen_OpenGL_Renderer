@@ -11,6 +11,18 @@ layout (location = 0) in Vertex
     mat3 tangentBasis;
 } vin;
 
+struct pointLight
+{
+    vec3 position;
+    vec3 color;
+};
+
+//why is this at 1 and not 0?
+layout (std140, binding = 1) uniform Block0 {
+    pointLight pointLights[10];
+};
+layout (location = 3) uniform uint lightNumber;
+
 const vec3 Fdielectric = vec3(0.04);
 
 layout (binding = 0) uniform sampler2D albedoMap;
@@ -20,11 +32,9 @@ layout (binding = 2) uniform sampler2D metallicRoughnessMap;
 layout (binding = 3) uniform sampler2D ambientOcclusionMap;
 layout (binding = 4) uniform sampler2D emissiveMap;
 
+
 layout (location = 6) uniform vec3 ambientLight;
 layout (location = 7) uniform vec3 cameraPos;
-layout (location = 8) uniform vec3 lightPosition;
-layout (location = 9) uniform vec3 lightColor;
-
 
 layout (location = 0) out vec4 FragColor;
 
@@ -100,29 +110,37 @@ void main()
     vec3 V = normalize(cameraPos - vin.position);
     vec3 F0 = vec3(4.0);
     F0 = mix(F0, albedo, metallic);
+
+
     vec3 Lo = vec3(0.0);
+    for (int i = 0; i < lightNumber; ++i) {
 
-    vec3 L = normalize(lightPosition - vin.position);
-    vec3 H = normalize(V + L);
+        vec3 lightPosition = pointLights[i].position;
+        vec3 lightColor = pointLights[i].color;
 
-    float distance = length(lightPosition - vin.position);
-    float attenuation = 1.0 / (distance * distance);
-    vec3 radiance = lightColor * attenuation;
+        vec3 L = normalize(lightPosition - vin.position);
+        vec3 H = normalize(V + L);
 
-    float NDF = DistributionGGX(N, H, roughness);
-    float G = GeometrySmith(N, V, L, roughness);
-    vec3 F = fresnelSchlick(max(dot(H, V), 0.0), F0);
+        float distance = length(lightPosition - vin.position);
+        float attenuation = 1.0 / (distance * distance);
+        vec3 radiance = lightColor * attenuation;
 
-    vec3 numerator = NDF * G * F;
-    float denominator = 4.0 * max(dot(N, V), 0.0) * max(dot(N, L), 0.0) + 0.0001; // + 0.0001 to prevent divide by zero
-    vec3 specular = numerator / denominator;
+        float NDF = DistributionGGX(N, H, roughness);
+        float G = GeometrySmith(N, V, L, roughness);
+        vec3 F = fresnelSchlick(max(dot(H, V), 0.0), F0);
 
-    vec3 kS = F;
-    vec3 kD = vec3(1.0) - kS;
-    kD *= 1.0 - metallic;
+        vec3 numerator = NDF * G * F;
+        float denominator = 4.0 * max(dot(N, V), 0.0) * max(dot(N, L), 0.0) + 0.0001; // + 0.0001 to prevent divide by zero
+        vec3 specular = numerator / denominator;
 
-    float NdotL = max(dot(N, L), 0.0);
-    Lo += (kD * albedo / PI + specular) * radiance * NdotL;
+
+        vec3 kS = F;
+        vec3 kD = vec3(1.0) - kS;
+        kD *= 1.0 - metallic;
+
+        float NdotL = max(dot(N, L), 0.0);
+        Lo += (kD * albedo / PI + specular) * radiance * NdotL;
+    }
 
     vec3 ambient = vec3(.03) * albedo * ao;
     vec3 color = ambient + Lo;

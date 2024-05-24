@@ -9,18 +9,19 @@ class SceneLighting {
 	glm::vec3 color;
 	float padding2 = 0;
   };
+
+  std::array<PointLight, 10> pointLights;
 #pragma pack(pop)
 
-  std::vector<PointLight> pointLights;
-  GLuint lightBufferObject;
-
-  //simple debug atm.
-  PointLight gpuLight;
-  glm::vec3 ambient;
+  u32 lightBufferObject;
+  u32 numberOfActiveLights;
 
  public:
-  void SetDebugLight(glm::vec3 newPosition, glm::vec3 newColor);
-  void BindPointLight(u32 shaderId, u32 index);
+
+  void BindPointLights(u32 shaderId);
   SceneLighting() = default;
-  void SetAmbientLight(glm::vec3 value, u32 shaderId);
+  void InitLighting(u32 shaderId);
+  void AddLight(glm::vec3 color, glm::vec3 position);
+  void RemoveLight(u32 lightIndex);
+
 };
