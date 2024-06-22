@@ -15,7 +15,6 @@ class RenderState {
 
   SceneLighting lighting;
   std::vector<OpenGLModel> models;
-  float ambientLight;
 
  public:
   Camera camera;
@@ -24,7 +23,6 @@ class RenderState {
   void Update(const GameState &state1, const GameState &state2, u64 currentFrameTime);
   void Render();
   void AddModel(u64 id);
-  void SetAmbientLight(float value);
 
   RenderState();
   ~RenderState() = default;

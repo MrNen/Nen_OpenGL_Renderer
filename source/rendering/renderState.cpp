@@ -8,7 +8,7 @@ void RenderState::Update(const GameState &state1, const GameState &state2, u64 c
 }
 
 void RenderState::Render() {
-  //glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
+  glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -25,7 +25,10 @@ void RenderState::Render() {
 
 void RenderState::AddModel(u64 id) {
   models.emplace_back(ConfigLoader::CreateConfigurable<OpenGLModel>(id));
-  models.emplace_back(ConfigLoader::CreateConfigurable<OpenGLModel>(id));
+
+  const u64 id2 = std::hash<std::string>{}("Damaged_Helmet");
+
+  models.emplace_back(ConfigLoader::CreateConfigurable<OpenGLModel>(id2));
 
   glm::mat4 transform = glm::translate(glm::mat4(1), {4.0, 0.0, 0.0});
   models[1].TransformModel(transform);
@@ -43,19 +46,17 @@ RenderState::RenderState() {
   lighting.InitLighting(shaderProgram.id);
   lighting.BindPointLights(shaderProgram.id);
 
-  glm::vec3 lightPos = {10.0f, 4.0f, 4.0f};
-  glm::vec3 lightDiffuse = {.00f, .00f, .80f};
+  std::string radianceFile = "/resources/textures/sky.hdr";
+  lighting.CreateRadianceCubeMap(radianceFile);
 
-  glm::vec3 lightPos2 = {-10.0f, 4.0f, 4.0f};
-  glm::vec3 lightDiffuse2 = {.90f, .00f, .00f};
+  glm::vec3 lightPos = {5.0f, 4.0f, 4.0f};
+  glm::vec3 lightDiffuse = {.00f, .00f, 1.80f};
+
+  glm::vec3 lightPos2 = {-5.0f, 4.0f, 4.0f};
+  glm::vec3 lightDiffuse2 = {1.90f, .00f, .00f};
 
   lighting.AddLight(lightDiffuse, lightPos);
   lighting.AddLight(lightDiffuse2, lightPos2);
   lighting.BindPointLights(shaderProgram.id);
 
 }
-
-void RenderState::SetAmbientLight(float value) {
-
-}
-

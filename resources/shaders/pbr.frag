@@ -17,13 +17,13 @@ struct pointLight
     vec3 color;
 };
 
+const vec3 Fdielectric = vec3(0.04);
+
 //why is this at 1 and not 0?
 layout (std140, binding = 1) uniform Block0 {
     pointLight pointLights[10];
 };
 layout (location = 3) uniform uint lightNumber;
-
-const vec3 Fdielectric = vec3(0.04);
 
 layout (binding = 0) uniform sampler2D albedoMap;
 layout (binding = 1) uniform sampler2D normalMap;
@@ -99,7 +99,6 @@ vec3 fresnelSchlick(float cosTheta, vec3 F0)
 
 void main()
 {
-    //converts albedo texture into linear space.
     vec3 albedo = pow(texture(albedoMap, vin.texcoord).rgb, vec3(2.2));
 
     float metallic = texture(metallicRoughnessMap, vin.texcoord).b;
@@ -122,7 +121,7 @@ void main()
         vec3 H = normalize(V + L);
 
         float distance = length(lightPosition - vin.position);
-        float attenuation = 1.0 / (distance * distance);
+        float attenuation = 1.0 / ((distance * distance) * .5);
         vec3 radiance = lightColor * attenuation;
 
         float NDF = DistributionGGX(N, H, roughness);
@@ -133,7 +132,6 @@ void main()
         float denominator = 4.0 * max(dot(N, V), 0.0) * max(dot(N, L), 0.0) + 0.0001; // + 0.0001 to prevent divide by zero
         vec3 specular = numerator / denominator;
 
-
         vec3 kS = F;
         vec3 kD = vec3(1.0) - kS;
         kD *= 1.0 - metallic;
@@ -142,7 +140,7 @@ void main()
         Lo += (kD * albedo / PI + specular) * radiance * NdotL;
     }
 
-    vec3 ambient = vec3(.03) * albedo * ao;
+    vec3 ambient = vec3(.16) * albedo * ao;
     vec3 color = ambient + Lo;
 
     color = color / (color + vec3(1.0));

@@ -1,0 +1,5 @@
+[image]
+uri = "resources/textures/sky.hdr"
+[Shader]
+Vertex_Path = "/resources/shaders/radiance.vert"
+Fragment_Path = "/resources/shaders/radiance.frag"

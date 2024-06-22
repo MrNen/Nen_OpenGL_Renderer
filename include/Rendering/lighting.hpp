@@ -16,9 +16,17 @@ class SceneLighting {
   u32 lightBufferObject;
   u32 numberOfActiveLights;
 
+  u32 radianceMapVertices;
+  u32 radianceMapVertexArrayId;
+  u32 radianceMapTextureId;
+  
+  glm::vec3 directionLight;
+  glm::vec3 directionColor;
+
  public:
 
   void BindPointLights(u32 shaderId);
+  void CreateRadianceCubeMap(std::string &textureFile);
   SceneLighting() = default;
   void InitLighting(u32 shaderId);
   void AddLight(glm::vec3 color, glm::vec3 position);

@@ -45,7 +45,6 @@ int main() {
 	  accumulator -= deltaTimeUint;
 	  scene->FixedUpdate(deltaTimeUint);
 
-
 	  //if for whatever reason we acquire too large of a buffer for updates we should skip them to keep the
 	  //performance consistent and not get stuck doing updates forever.
 	  if (accumulator >= 160)

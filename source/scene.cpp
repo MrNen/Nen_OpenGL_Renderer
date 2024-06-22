@@ -22,11 +22,8 @@ void Scene::FixedUpdate(u64 time) {
 
 void Scene::Test() {
   std::string nickName = "SF_Helmet";
-
   u64 id = std::hash<std::string>{}(nickName);
-
   renderstate->AddModel(id);
-  renderstate->Update(*gamestate1, *gamestate2, 0.0f);
 }
 
 void Scene::FrameUpdate(double time) {
@@ -40,5 +37,4 @@ void Scene::FrameUpdate(double time) {
   renderstate->camera.MoveCamera(tempWishDir);
   playerController->ProcessInputs(time);
   renderstate->Render();
-
 }
