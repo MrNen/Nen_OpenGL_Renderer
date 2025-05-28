@@ -7,6 +7,7 @@
 #include <iostream>
 #include <format>
 #include <filesystem>
+#include <array>
 
 const std::string execName = "OpenGLRenderer.exe";
 const std::string debugRoot = "C:/Projects/OpenGLRenderer";
@@ -25,12 +26,11 @@ using i16 = short;
 using f32 = float;
 using f64 = double;
 
-#include "entt/entt.hpp"
 #include "toml++/toml.h"
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
 #include "glm/glm.hpp"
-#include "taskflow/taskflow.hpp"
+
 
 #include "configloader.hpp"
 
