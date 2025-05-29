@@ -10,7 +10,7 @@
 #include <array>
 
 const std::string execName = "OpenGLRenderer.exe";
-const std::string debugRoot = "C:/Projects/OpenGLRenderer";
+const std::string debugRoot = "C:/projects/Nen_OpenGL_Renderer";
 
 const uint32_t execNameSize = execName.size();
 
@@ -33,5 +33,3 @@ using f64 = double;
 
 
 #include "configloader.hpp"
-
-

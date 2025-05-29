@@ -3,7 +3,7 @@
 #include "playerController.hpp"
 #include "windowManager.hpp"
 
-constexpr double mouseScalingFactor = .005f;
+constexpr double mouseScalingFactor = .03f;
 
 bool PlayerController::LoadToml(const toml::parse_result &toml) {
   auto ptr = Window::GetHandle()->GetWindowPointer();

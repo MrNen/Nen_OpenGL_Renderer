@@ -1,10 +1,10 @@
 [Images]
-front = "/resources/textures/skybox/front.jpg"
-left = "/resources/textures/skybox/left.jpg"
-right = "/resources/textures/skybox/right.jpg"
-back = "/resources/textures/skybox/back.jpg"
-bottom = "/resources/textures/skybox/bottom.jpg"
-top = "/resources/textures/skybox/top.jpg"
+front = "/resources/textures/skybox/posz.jpg"
+left = "/resources/textures/skybox/negx.jpg"
+right = "/resources/textures/skybox/posx.jpg"
+back = "/resources/textures/skybox/negz.jpg"
+bottom = "/resources/textures/skybox/negy.jpg"
+top = "/resources/textures/skybox/posy.jpg"
 [Shader]
 Vertex_Path = "/resources/shaders/skybox.vert"
 Fragment_Path = "/resources/shaders/skybox.frag"

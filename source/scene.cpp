@@ -28,7 +28,7 @@ void Scene::Test() {
 
 void Scene::FrameUpdate(double time) {
 
-  renderstate->camera.RotateCamera(playerController->GetPitch(), playerController->GetYaw());
+  renderstate->camera.RotateCamera(playerController->GetPitch(), playerController->GetYaw(),time);
 
   glm::vec3 tempWishDir(playerController->GetWishDirection().x, 0.0f, playerController->GetWishDirection().y);
 

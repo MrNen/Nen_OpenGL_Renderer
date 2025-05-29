@@ -1,6 +1,7 @@
 #include "PCH.hpp"
 #include "Rendering/camera.hpp"
 #include "glm/gtx/matrix_decompose.hpp"
+#include "glm/gtc/type_ptr.hpp"
 
 bool Camera::LoadToml(const toml::parse_result &toml) {
   pos = {toml["Camera"]["Position"][0].value_or(0.0), toml["Camera"]["Position"][1].value_or(5.0),
@@ -42,7 +43,10 @@ void Camera::InitCamera(u32 shaderId) {
   glProgramUniformMatrix4fv(shaderId, 1, 1, GL_FALSE, glm::value_ptr(viewMatrix));
   glProgramUniformMatrix4fv(shaderId, 2, 1, GL_FALSE, glm::value_ptr(projectionMatrix));
 }
-void Camera::RotateCamera(float p, float y) {
+void Camera::RotateCamera(float p, float y,double deltaTime) {
+
+  p /= deltaTime;
+  y /= deltaTime;
 
   //Yaw the camera about the world up, this will make sure the camera is always panning horizontally relative to the horizon.
   glm::mat3 rotationYaw = glm::rotate(glm::mat4(1.0f), y, worldUp);
@@ -69,6 +73,8 @@ void Camera::MoveCamera(glm::vec3 vec) {
   glm::vec3 _;
   glm::vec4 _2;
   glm::decompose(viewMatrix, _, rotation, _, _, _2);
+
+
 
   auto mat = glm::inverse(glm::mat3(rotation));
   vec = mat * vec;

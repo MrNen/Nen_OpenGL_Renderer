@@ -34,5 +34,5 @@ class Camera : public Configurable {
   void MoveCamera(glm::vec3 vec);
 
   //updates pitch and yaw values and rotates the view matrix accordingly
-  void RotateCamera(float p, float y);
+  void RotateCamera(float p, float y,double deltaTime);
 };
