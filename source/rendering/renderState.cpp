@@ -2,6 +2,8 @@
 
 #include  "Rendering/renderState.hpp"
 
+#include <glm/ext/matrix_transform.hpp>
+
 void RenderState::Update(const GameState &state1, const GameState &state2, u64 currentFrameTime) {
   // models[0].TransformModel(glm::rotate(glm::mat4(1.0f), glm::radians(90.0f), {1.0f, 0.0f, 0.0f}));
 
@@ -25,14 +27,6 @@ void RenderState::Render() {
 
 void RenderState::AddModel(u64 id) {
   models.emplace_back(ConfigLoader::CreateConfigurable<OpenGLModel>(id));
-
-  const u64 id2 = std::hash<std::string>{}("Damaged_Helmet");
-
-  models.emplace_back(ConfigLoader::CreateConfigurable<OpenGLModel>(id2));
-
-  glm::mat4 transform = glm::translate(glm::mat4(1), {4.0, 0.0, 0.0});
-  models[1].TransformModel(transform);
-
 }
 
 RenderState::RenderState() {
