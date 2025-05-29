@@ -29,7 +29,10 @@ int main() {
   u64 previousFrame =
 	  duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
   u64 currentFrame = previousFrame;
-  double frameTime = 0;
+
+  //Things break if frametime is 0, the loop itself gaurantees it will be at least 4
+  // so we set it to 4 manually for the first frame of the application.
+  u64 frameTime = 4;
 
   glEnable(GL_DEPTH_TEST);
   auto scene = ConfigLoader::CreateConfigurablePtr<Scene>(configLoader->LoadSettings());
@@ -52,13 +55,22 @@ int main() {
 	  //Fixed Update processes.
 	}
 
-	scene->FrameUpdate(frameTime);
+	scene->FrameUpdate(static_cast<double>(frameTime));
 	window->UpdateWindow();
 
+    //Cap the app update time to at least every 4ms (250 fps)
+    bool moveToNextUpdate = false;
+    while (!moveToNextUpdate){
 	currentFrame =
 		duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
 	frameTime = currentFrame - previousFrame;
-	accumulator += currentFrame - previousFrame;
+      if (frameTime >= 4) {
+        moveToNextUpdate = true;
+        accumulator += currentFrame - previousFrame;
+      }
+    }
+
+
   }
   return 0;
 }
