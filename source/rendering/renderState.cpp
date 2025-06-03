@@ -40,17 +40,20 @@ RenderState::RenderState() {
   lighting.InitLighting(shaderProgram.id);
   lighting.BindPointLights(shaderProgram.id);
 
+  /*
   std::string radianceFile = "/resources/textures/sky.hdr";
   lighting.CreateRadianceCubeMap(radianceFile);
+  */
 
   glm::vec3 lightPos = {5.0f, 4.0f, 4.0f};
-  glm::vec3 lightDiffuse = {.00f, .00f, 1.80f};
+  glm::vec3 lightDiffuse = {.00f, .00f, 10.00f};
 
   glm::vec3 lightPos2 = {-5.0f, 4.0f, 4.0f};
-  glm::vec3 lightDiffuse2 = {1.90f, .00f, .00f};
+  glm::vec3 lightDiffuse2 = {10.00f, .00f, .00f};
 
+  lighting.SetDirectionalLight({-1.2f, 1.0f, -1.3f}, {1.0f, 1.0f, 1.0f},shaderProgram.id );
   lighting.AddLight(lightDiffuse, lightPos);
-  lighting.AddLight(lightDiffuse2, lightPos2);
   lighting.BindPointLights(shaderProgram.id);
+
 
 }

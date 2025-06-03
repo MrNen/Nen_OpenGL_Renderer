@@ -20,6 +20,7 @@ layout (location = 8) uniform vec3 lightPosition;
 layout (location = 9) uniform vec3 lightColor;
 
 
+
 const float PI = 3.14159265359;
 
 vec3 getNormalFromMap()

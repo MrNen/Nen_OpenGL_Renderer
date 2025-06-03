@@ -32,9 +32,13 @@ layout (binding = 2) uniform sampler2D metallicRoughnessMap;
 layout (binding = 3) uniform sampler2D ambientOcclusionMap;
 layout (binding = 4) uniform sampler2D emissiveMap;
 
-
 layout (location = 6) uniform vec3 ambientLight;
 layout (location = 7) uniform vec3 cameraPos;
+
+layout(location =  10) uniform vec3 directionalLight;
+layout (location = 11) uniform vec3 directionalColor;
+
+
 
 layout (location = 0) out vec4 FragColor;
 
@@ -107,11 +111,31 @@ void main()
 
     vec3 N = getNormalFromMap();
     vec3 V = normalize(cameraPos - vin.position);
-    vec3 F0 = vec3(4.0);
+    vec3 F0 = vec3(0.04);
     F0 = mix(F0, albedo, metallic);
 
-
     vec3 Lo = vec3(0.0);
+
+    //Calculate the directional light
+    vec3 H = normalize(V + directionalLight);
+    vec3 radiance = directionalColor;
+
+    float NDF = DistributionGGX(N, H, roughness);
+    float G = GeometrySmith(N, V, directionalLight, roughness);
+    vec3 F = fresnelSchlick(max(dot(H, V), 0.0), F0);
+
+    vec3 numerator = NDF * G * F;
+    float denominator = 4.0 * max(dot(N, V), 0.0) * max(dot(N, directionalLight), 0.0) + 0.0001;// + 0.0001 to prevent divide by zero
+    vec3 specular = numerator / denominator;
+
+    vec3 kS = F;
+    vec3 kD = vec3(1.0) - kS;
+    kD *= 1.0 - metallic;
+
+    float NdotL = max(dot(N, directionalLight), 0.0);
+
+    Lo += (kD * albedo / PI + specular) * radiance * NdotL;
+
     for (int i = 0; i < lightNumber; ++i) {
 
         vec3 lightPosition = pointLights[i].position;
@@ -129,7 +153,7 @@ void main()
         vec3 F = fresnelSchlick(max(dot(H, V), 0.0), F0);
 
         vec3 numerator = NDF * G * F;
-        float denominator = 4.0 * max(dot(N, V), 0.0) * max(dot(N, L), 0.0) + 0.0001; // + 0.0001 to prevent divide by zero
+        float denominator = 4.0 * max(dot(N, V), 0.0) * max(dot(N, L), 0.0) + 0.0001;// + 0.0001 to prevent divide by zero
         vec3 specular = numerator / denominator;
 
         vec3 kS = F;
@@ -140,7 +164,7 @@ void main()
         Lo += (kD * albedo / PI + specular) * radiance * NdotL;
     }
 
-    vec3 ambient = vec3(.16) * albedo * ao;
+    vec3 ambient = vec3(.03) * albedo * ao;
     vec3 color = ambient + Lo;
 
     color = color / (color + vec3(1.0));

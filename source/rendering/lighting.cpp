@@ -1,6 +1,11 @@
 #include "PCH.hpp"
 
 #include "Rendering/lighting.hpp"
+
+#include "PCH.hpp"
+#include "PCH.hpp"
+#include "PCH.hpp"
+#include "PCH.hpp"
 #include "Rendering/renderDefs.h"
 #include "glm/gtc/type_ptr.hpp"
 #include "stb_image.h"
@@ -56,7 +61,14 @@ void SceneLighting::RemoveLight(u32 lightIndex) {
 	return glm::length(a.color) > glm::length(b.color);
   });
 
+}void SceneLighting::SetDirectionalLight(glm::vec3 direction, glm::vec3 color,u32 shaderId){
+  directionLight = glm::normalize(direction);
+  directionColor = color;
+  glProgramUniform3fv(shaderId, Uniform::directionalLight, 1, glm::value_ptr(directionLight));
+  glProgramUniform3fv(shaderId, Uniform::directionalLightColor, 1, glm::value_ptr(directionColor));
 }
+
+
 void SceneLighting::CreateRadianceCubeMap(std::string &textureFile) {
   int width, height, nrChannels;
   unsigned int hdrTexture;

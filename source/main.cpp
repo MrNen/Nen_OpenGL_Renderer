@@ -1,4 +1,8 @@
 #include "PCH.hpp"
+#include "UserInterface.hpp"
+
+#include <imgui_impl_opengl3.h>
+#include <thread>
 
 static_assert(sizeof(unsigned long long) == sizeof(void *), "This application only supports x64 architecture");
 
@@ -23,6 +27,9 @@ int main() {
 
   const auto configLoader = ConfigLoader::CreateConfigLoader();
   const auto window = ConfigLoader::CreateConfigurablePtr<Window>(configLoader->LoadSettings());
+  const auto Ui = std::make_unique<UserInterface>(window->GetWindowPointer());
+
+
   ResourceLoader::CreateResourceLoader();
 
   u64 accumulator = 0;
@@ -43,6 +50,7 @@ int main() {
 	previousFrame = currentFrame;
 	window->PollEvents();
 
+    Ui->Debug();
 	// Fixed time-step update
 	while (accumulator >= 16) {
 	  accumulator -= deltaTimeUint;
@@ -56,18 +64,20 @@ int main() {
 	}
 
 	scene->FrameUpdate(static_cast<double>(frameTime));
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	window->UpdateWindow();
 
     //Cap the app update time to at least every 4ms (250 fps)
-    bool moveToNextUpdate = false;
-    while (!moveToNextUpdate){
+    while (true){
 	currentFrame =
 		duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
 	frameTime = currentFrame - previousFrame;
+
       if (frameTime >= 4) {
-        moveToNextUpdate = true;
         accumulator += currentFrame - previousFrame;
+        break;
       }
+      std::this_thread::sleep_for(std::chrono::milliseconds(1));
     }
 
 

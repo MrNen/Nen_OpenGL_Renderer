@@ -46,7 +46,7 @@ void PlayerController::SaveToml() {
 void PlayerController::MouseCallback(GLFWwindow *window, double x, double y) {
 
   //ptr is essentially our "This" ptr for PlayerController
-  auto ptr = reinterpret_cast<PlayerController *>(glfwGetWindowUserPointer(window));
+  const auto ptr = static_cast<PlayerController *>(glfwGetWindowUserPointer(window));
   if (ptr->inMenu) {
 	ptr->mousePos = {x, y};
 	ptr->lastMousePos = glm::vec2(x, y);
@@ -88,14 +88,14 @@ void PlayerController::ProcessInputs(double frameDelta) {
   ResetPitchYaw();
 }
 
-float PlayerController::GetYaw() {
+float PlayerController::GetYaw()const {
   return accumulatedYaw;
 }
-float PlayerController::GetPitch() {
+float PlayerController::GetPitch()const {
   return accumulatedPitch;
 }
 void PlayerController::KeyPressCallback(GLFWwindow *window, int key, int scancode, int action, int mods) {
-  auto ptr = reinterpret_cast<PlayerController *>(glfwGetWindowUserPointer(window));
+  const auto ptr = static_cast<PlayerController *>(glfwGetWindowUserPointer(window));
 
   //Forward Key
   if (key == ptr->forwardKey && action == GLFW_PRESS) {

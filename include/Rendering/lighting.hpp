@@ -31,5 +31,6 @@ class SceneLighting {
   void InitLighting(u32 shaderId);
   void AddLight(glm::vec3 color, glm::vec3 position);
   void RemoveLight(u32 lightIndex);
+  void SetDirectionalLight(glm::vec3 direction, glm::vec3 color,u32 shaderId);
 
 };

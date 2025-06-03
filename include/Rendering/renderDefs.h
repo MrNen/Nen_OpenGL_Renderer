@@ -24,7 +24,9 @@ enum Uniform {
   ambientLight,
   cameraPosition,
   lightPos,
-  lightColor
+  lightColor,
+  directionalLight,
+  directionalLightColor,
 };
 
 enum UniformBlockBindings {

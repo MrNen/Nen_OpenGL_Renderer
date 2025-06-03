@@ -78,6 +78,7 @@ float Window::GetWindowRatio() {
 }
 
 void Window::UpdateWindow() {
+
   glfwSwapBuffers(window);
   glfwPollEvents();
 }

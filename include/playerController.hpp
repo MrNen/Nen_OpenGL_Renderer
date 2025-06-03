@@ -33,8 +33,8 @@ class PlayerController final : public Configurable {
 
  public:
 
-  float GetPitch();
-  float GetYaw();
+  float GetPitch()const;
+  float GetYaw()const;
   glm::vec2 GetWishDirection();
 
   void ResetPitchYaw();
