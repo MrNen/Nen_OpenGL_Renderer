@@ -40,7 +40,9 @@ class PlayerController final : public Configurable {
   void ResetPitchYaw();
   void EnableMouseCursor();
   void DisableMouseCursor();
+  void ProcessPerFrameInput(double deltaTime);
 
-  void ProcessInputs(double frameDelta);
+  //Resets THe controller for the next frame.
+  void ResetController(double frameDelta);
 
 };

@@ -41,7 +41,7 @@ int main() {
   // so we set it to 4 manually for the first frame of the application.
   u64 frameTime = 4;
 
-  glEnable(GL_DEPTH_TEST);
+
   auto scene = ConfigLoader::CreateConfigurablePtr<Scene>(configLoader->LoadSettings());
 
   scene->Test();
@@ -62,9 +62,8 @@ int main() {
 		accumulator = 0;
 	  //Fixed Update processes.
 	}
-
 	scene->FrameUpdate(static_cast<double>(frameTime));
-    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	window->UpdateWindow();
 
     //Cap the app update time to at least every 4ms (250 fps)
@@ -79,8 +78,6 @@ int main() {
       }
       std::this_thread::sleep_for(std::chrono::milliseconds(1));
     }
-
-
   }
   return 0;
 }

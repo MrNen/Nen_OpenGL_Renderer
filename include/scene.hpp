@@ -21,6 +21,7 @@ class Scene : public Configurable {
   void FrameUpdate(double time);
   void FixedUpdate(u64 time);
   void Test();
+  void UpdateCamera();
 
   Scene() = default;
 };

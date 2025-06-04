@@ -1,5 +1,7 @@
 #pragma once
 
+#include "PCH.hpp"
+#include "PCH.hpp"
 #include "renderDefs.h"
 #include "toml++/toml.h"
 #include "glm/gtc/matrix_transform.hpp"
@@ -31,7 +33,7 @@ class Camera : public Configurable {
 
   void UpdateCameraFov(glm::mat4 view, u32 id);
   void InitCamera(u32 shaderId);
-  void MoveCamera(glm::vec3 vec);
+  void MoveCamera(glm::vec3 vec,double time);
 
   //updates pitch and yaw values and rotates the view matrix accordingly
   void RotateCamera(float p, float y,double deltaTime);

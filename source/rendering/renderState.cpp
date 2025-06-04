@@ -12,7 +12,7 @@ void RenderState::Update(const GameState &state1, const GameState &state2, u64 c
 void RenderState::Render() {
   glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
   shaderProgram.UseProgram();
   camera.UpdateCameraTransform(shaderProgram.id);
@@ -27,9 +27,14 @@ void RenderState::Render() {
 
 void RenderState::AddModel(u64 id) {
   models.emplace_back(ConfigLoader::CreateConfigurable<OpenGLModel>(id));
+
+}void RenderState::UpdateCamera(float pitch, float yaw, glm::vec3 direction, double time){
+  camera.RotateCamera(pitch, yaw, time);
+  camera.MoveCamera(direction,time);
 }
 
 RenderState::RenderState() {
+  glEnable(GL_DEPTH_TEST);
   auto configLoader = ConfigLoader::GetHandle();
   models.reserve(20);
   camera = ConfigLoader::CreateConfigurable<Camera>(configLoader->LoadSettings());

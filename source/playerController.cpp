@@ -78,12 +78,20 @@ void PlayerController::DisableMouseCursor() {
   if (glfwRawMouseMotionSupported())
 	glfwSetInputMode(ptr, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
   inMenu = false;
+}void PlayerController::ProcessPerFrameInput(double deltaTime){
+
+
+
 }
+
+
 void PlayerController::ResetPitchYaw() {
   accumulatedPitch = 0;
   accumulatedYaw = 0;
 }
-void PlayerController::ProcessInputs(double frameDelta) {
+
+
+void PlayerController::ResetController(double frameDelta) {
   updateDelta = frameDelta;
   ResetPitchYaw();
 }

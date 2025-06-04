@@ -68,13 +68,14 @@ void Camera::RotateCamera(float p, float y,double deltaTime) {
   cameraUp = glm::normalize(glm::cross(cameraRight, direction));
 
 }
-void Camera::MoveCamera(glm::vec3 vec) {
+void Camera::MoveCamera(glm::vec3 vec,double time) {
+
+  vec *= (time / 1000);
+
   glm::quat rotation;
   glm::vec3 _;
   glm::vec4 _2;
   glm::decompose(viewMatrix, _, rotation, _, _, _2);
-
-
 
   auto mat = glm::inverse(glm::mat3(rotation));
   vec = mat * vec;
